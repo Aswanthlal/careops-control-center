@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareOps Bookings</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Bookings</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Service</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="bookingsTable">
+    </tbody>
+</table>
+
+<script src="/static/js/bookings.js"></script>
+
+</body>
+</html>

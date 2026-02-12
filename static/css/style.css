@@ -1,0 +1,35 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: 0.2s ease;
+}
+
+.alert-message {
+    color: red;
+    font-weight: bold;
+}
+
+.alert-dot {
+    color: red;
+    font-weight: bold;
+    margin-left: 6px;
+}
+

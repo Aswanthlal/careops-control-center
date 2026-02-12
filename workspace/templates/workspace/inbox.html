@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareOps Inbox</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .inbox-container {
+            display: flex;
+            height: 80vh;
+        }
+
+        .conversation-list {
+            width: 30%;
+            border-right: 1px solid #ccc;
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .conversation-item:hover {
+            background: #f0f0f0;
+        }
+
+        .chat-window {
+            width: 70%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .reply-box {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Inbox</h1>
+
+<div class="inbox-container">
+
+    <div class="conversation-list" id="conversationList">
+        <!-- Conversations load here -->
+    </div>
+
+    <div class="chat-window">
+        <div class="messages" id="messages">
+            Select a conversation
+        </div>
+
+        <div class="reply-box">
+            <input type="text" id="replyInput" placeholder="Type message..." style="flex:1;">
+            <button onclick="sendReply()">Send</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/js/inbox.js"></script>
+
+</body>
+</html>

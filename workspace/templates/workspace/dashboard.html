@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareOps Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<h1>CareOps Dashboard</h1>
+
+<div class="cards">
+
+    <div class="card" onclick="location.href='/bookings/'" style="cursor: pointer;">
+        <h3>Today's Bookings</h3>
+        <p id="todayBookings">0</p>
+    </div>
+
+    <div class="card" onclick="location.href='/inbox/'" style="cursor: pointer;">
+        <h3>Unanswered Conversations</h3>
+        <p id="unansweredCount">0</p>
+    </div>
+
+    <div class="card" onclick="location.href='/inbox/'" style="cursor: pointer;">
+        <h3>Low Stock Alerts</h3>
+        <p id="lowStockCount">0</p>
+    </div>
+
+</div>
+
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>
