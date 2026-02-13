@@ -130,3 +130,58 @@ def update_booking_status(request):
         booking.save()
 
         return JsonResponse({"status": "updated"})
+
+
+def seed_demo(request):
+    from .models import Workspace, Contact, Conversation, Message, Service, Booking, InventoryItem
+    from django.utils import timezone
+    from datetime import timedelta
+
+    ws = Workspace.objects.create(
+        name="Demo Business",
+        address="Mumbai",
+        timezone="Asia/Kolkata",
+        contact_email="demo@test.com",
+        is_active=True
+    )
+
+    contact = Contact.objects.create(
+        workspace=ws,
+        name="John Doe",
+        email="john@test.com"
+    )
+
+    conv = Conversation.objects.create(
+        workspace=ws,
+        contact=contact
+    )
+
+    Message.objects.create(
+        conversation=conv,
+        sender="system",
+        channel="email",
+        content="Welcome to our service!"
+    )
+
+    service = Service.objects.create(
+        workspace=ws,
+        name="Consultation",
+        duration_minutes=60,
+        location="Office"
+    )
+
+    Booking.objects.create(
+        workspace=ws,
+        service=service,
+        contact=contact,
+        start_time=timezone.now() + timedelta(hours=2)
+    )
+
+    item = InventoryItem.objects.create(
+        workspace=ws,
+        name="Gloves",
+        quantity=2,
+        low_threshold=3
+    )
+
+    return JsonResponse({"status": "demo data created"})

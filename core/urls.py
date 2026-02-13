@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from workspace.views import dashboard, inbox, dashboard_data, get_conversations, get_messages, send_reply,bookings_page
 from workspace.views import get_bookings, update_booking_status
-
+from workspaces.views import seed_demo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +31,8 @@ urlpatterns = [
     path('api/messages/<int:conv_id>/', get_messages),
     path('api/send-reply/', send_reply),
     path('api/bookings/', get_bookings),
-    path('api/update-booking/', update_booking_status),    
+    path('api/update-booking/', update_booking_status),
+    path('seed-demo/', seed_demo),
+    
 ]
 
