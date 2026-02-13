@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from workspace.views import dashboard, inbox, dashboard_data, get_conversations, get_messages, send_reply,bookings_page
 from workspace.views import get_bookings, update_booking_status
-from workspaces.views import seed_demo
+from workspace.views import seed_demo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
