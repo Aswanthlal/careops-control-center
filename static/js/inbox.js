@@ -1,8 +1,9 @@
+const BASE = window.location.origin;
+
 let currentConversation = null;
 
 function loadConversations() {
-    fetchfetch("/api/conversations/")
-
+    fetch(BASE + "/api/conversations/")
         .then(res => res.json())
         .then(data => {
             const list = document.getElementById("conversationList");
@@ -14,7 +15,7 @@ function loadConversations() {
                 div.innerHTML = conv.contact;
 
                 if (conv.alert) {
-                    div.innerHTML += "<span class='alert-dot'>⚠</span>";
+                    div.innerHTML += "<span class='alert-dot'> ⚠</span>";
                 }
 
                 div.onclick = () => loadMessages(conv.id);
@@ -26,8 +27,7 @@ function loadConversations() {
 function loadMessages(convId) {
     currentConversation = convId;
 
-    fetchfetch(window.location.origin + `/api/messages/${convId}/`)
-
+    fetch(BASE + `/api/messages/${convId}/`)
         .then(res => res.json())
         .then(data => {
             const messagesDiv = document.getElementById("messages");
@@ -36,20 +36,10 @@ function loadMessages(convId) {
             data.forEach(msg => {
                 const div = document.createElement("div");
                 div.className = "message";
-                
                 div.innerText = `${msg.sender}: ${msg.content}`;
-                
-                if (msg.content.includes("Low stock")) {
-                    div.innerText = "🚨 " + `${msg.sender}: ${msg.content}`;
-                    div.classList.add("alert-message");
-                }
-                
-                
 
-                // 🚦 Highlight alert messages
-                if (msg.content.includes("⚠")) {
+                if (msg.content.includes("Low stock")) {
                     div.style.color = "red";
-                    div.style.fontWeight = "bold";
                 }
 
                 messagesDiv.appendChild(div);
@@ -59,15 +49,13 @@ function loadMessages(convId) {
 
 function sendReply() {
     const input = document.getElementById("replyInput");
-    const content = input.value;
 
-    fetchfetch(window.location.origin + "/api/send-reply/", {
-
+    fetch(BASE + "/api/send-reply/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             conversation_id: currentConversation,
-            content: content
+            content: input.value
         })
     }).then(() => {
         input.value = "";
