@@ -1,5 +1,6 @@
 function loadBookings() {
-    fetch("/api/bookings/")
+    fetchfetch(window.location.origin + "/api/bookings/")
+
         .then(res => res.json())
         .then(data => {
             const table = document.getElementById("bookingsTable");
@@ -25,7 +26,8 @@ function loadBookings() {
 }
 
 function updateStatus(id, status) {
-    fetch("/api/update-booking/", {
+    fetchfetch(window.location.origin + "/api/update-booking/", {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

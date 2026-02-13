@@ -1,7 +1,8 @@
 let currentConversation = null;
 
 function loadConversations() {
-    fetch("/api/conversations/")
+    fetchfetch("/api/conversations/")
+
         .then(res => res.json())
         .then(data => {
             const list = document.getElementById("conversationList");
@@ -25,7 +26,8 @@ function loadConversations() {
 function loadMessages(convId) {
     currentConversation = convId;
 
-    fetch(`/api/messages/${convId}/`)
+    fetchfetch(window.location.origin + `/api/messages/${convId}/`)
+
         .then(res => res.json())
         .then(data => {
             const messagesDiv = document.getElementById("messages");
@@ -59,7 +61,8 @@ function sendReply() {
     const input = document.getElementById("replyInput");
     const content = input.value;
 
-    fetch("/api/send-reply/", {
+    fetchfetch(window.location.origin + "/api/send-reply/", {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
