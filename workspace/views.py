@@ -140,6 +140,16 @@ def seed_demo(request):
     from django.utils import timezone
     from datetime import timedelta
 
+    # 🧹 CLEAR OLD DATA FIRST
+    Booking.objects.all().delete()
+    Message.objects.all().delete()
+    Conversation.objects.all().delete()
+    Contact.objects.all().delete()
+    Service.objects.all().delete()
+    InventoryItem.objects.all().delete()
+    Workspace.objects.all().delete()
+
+    # 🚀 Now create fresh demo workspace
     ws = Workspace.objects.create(
         name="Demo Clinic",
         address="Mumbai",
@@ -156,7 +166,7 @@ def seed_demo(request):
     )
 
     # 1️⃣ Unanswered Inquiry
-    rahul = Contact.objects.create(workspace=ws, name="Rahul", email="rahul@test.com")
+    rahul = Contact.objects.create(workspace=ws, name="Rahul")
     conv1 = Conversation.objects.create(workspace=ws, contact=rahul)
     Message.objects.create(
         conversation=conv1,
@@ -166,25 +176,19 @@ def seed_demo(request):
     )
 
     # 2️⃣ Confirmed Booking
-    priya = Contact.objects.create(workspace=ws, name="Priya", email="priya@test.com")
+    priya = Contact.objects.create(workspace=ws, name="Priya")
     conv2 = Conversation.objects.create(workspace=ws, contact=priya)
-    booking2 = Booking.objects.create(
+    Booking.objects.create(
         workspace=ws,
         service=service,
         contact=priya,
         start_time=timezone.now() + timedelta(hours=3)
     )
-    Message.objects.create(
-        conversation=conv2,
-        sender="system",
-        channel="email",
-        content="Your booking for Consultation is confirmed!"
-    )
 
     # 3️⃣ Low Stock Scenario
-    arjun = Contact.objects.create(workspace=ws, name="Arjun", email="arjun@test.com")
+    arjun = Contact.objects.create(workspace=ws, name="Arjun")
     conv3 = Conversation.objects.create(workspace=ws, contact=arjun)
-    booking3 = Booking.objects.create(
+    Booking.objects.create(
         workspace=ws,
         service=service,
         contact=arjun,
@@ -206,9 +210,9 @@ def seed_demo(request):
     )
 
     # 4️⃣ Completed Booking
-    sneha = Contact.objects.create(workspace=ws, name="Sneha", email="sneha@test.com")
+    sneha = Contact.objects.create(workspace=ws, name="Sneha")
     conv4 = Conversation.objects.create(workspace=ws, contact=sneha)
-    booking4 = Booking.objects.create(
+    Booking.objects.create(
         workspace=ws,
         service=service,
         contact=sneha,
@@ -216,11 +220,4 @@ def seed_demo(request):
         status="completed"
     )
 
-    Message.objects.create(
-        conversation=conv4,
-        sender="system",
-        channel="email",
-        content="Booking completed successfully."
-    )
-
-    return JsonResponse({"status": "enhanced demo data created"})
+    return JsonResponse({"status": "fresh demo data created"})
