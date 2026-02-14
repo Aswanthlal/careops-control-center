@@ -136,11 +136,11 @@ import os
 
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
