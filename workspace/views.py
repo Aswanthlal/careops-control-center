@@ -133,34 +133,19 @@ def update_booking_status(request):
 
 
 def seed_demo(request):
-    from .models import Workspace, Contact, Conversation, Message, Service, Booking, InventoryItem
+    from .models import (
+        Workspace, Contact, Conversation, Message,
+        Service, Booking, InventoryItem
+    )
     from django.utils import timezone
     from datetime import timedelta
 
     ws = Workspace.objects.create(
-        name="Demo Business",
+        name="Demo Clinic",
         address="Mumbai",
         timezone="Asia/Kolkata",
         contact_email="demo@test.com",
         is_active=True
-    )
-
-    contact = Contact.objects.create(
-        workspace=ws,
-        name="John Doe",
-        email="john@test.com"
-    )
-
-    conv = Conversation.objects.create(
-        workspace=ws,
-        contact=contact
-    )
-
-    Message.objects.create(
-        conversation=conv,
-        sender="system",
-        channel="email",
-        content="Welcome to our service!"
     )
 
     service = Service.objects.create(
@@ -170,18 +155,72 @@ def seed_demo(request):
         location="Office"
     )
 
-    Booking.objects.create(
+    # 1️⃣ Unanswered Inquiry
+    rahul = Contact.objects.create(workspace=ws, name="Rahul", email="rahul@test.com")
+    conv1 = Conversation.objects.create(workspace=ws, contact=rahul)
+    Message.objects.create(
+        conversation=conv1,
+        sender="customer",
+        channel="email",
+        content="Hi, I’d like to know your availability."
+    )
+
+    # 2️⃣ Confirmed Booking
+    priya = Contact.objects.create(workspace=ws, name="Priya", email="priya@test.com")
+    conv2 = Conversation.objects.create(workspace=ws, contact=priya)
+    booking2 = Booking.objects.create(
         workspace=ws,
         service=service,
-        contact=contact,
-        start_time=timezone.now() + timedelta(hours=2)
+        contact=priya,
+        start_time=timezone.now() + timedelta(hours=3)
+    )
+    Message.objects.create(
+        conversation=conv2,
+        sender="system",
+        channel="email",
+        content="Your booking for Consultation is confirmed!"
+    )
+
+    # 3️⃣ Low Stock Scenario
+    arjun = Contact.objects.create(workspace=ws, name="Arjun", email="arjun@test.com")
+    conv3 = Conversation.objects.create(workspace=ws, contact=arjun)
+    booking3 = Booking.objects.create(
+        workspace=ws,
+        service=service,
+        contact=arjun,
+        start_time=timezone.now() + timedelta(hours=5)
     )
 
     item = InventoryItem.objects.create(
         workspace=ws,
-        name="Gloves",
+        name="Medical Gloves",
         quantity=2,
         low_threshold=3
     )
 
-    return JsonResponse({"status": "demo data created"})
+    Message.objects.create(
+        conversation=conv3,
+        sender="system",
+        channel="email",
+        content="⚠ Low stock alert: Medical Gloves is below threshold!"
+    )
+
+    # 4️⃣ Completed Booking
+    sneha = Contact.objects.create(workspace=ws, name="Sneha", email="sneha@test.com")
+    conv4 = Conversation.objects.create(workspace=ws, contact=sneha)
+    booking4 = Booking.objects.create(
+        workspace=ws,
+        service=service,
+        contact=sneha,
+        start_time=timezone.now() - timedelta(hours=2),
+        status="completed"
+    )
+
+    Message.objects.create(
+        conversation=conv4,
+        sender="system",
+        channel="email",
+        content="Booking completed successfully."
+    )
+
+    return JsonResponse({"status": "enhanced demo data created"})
